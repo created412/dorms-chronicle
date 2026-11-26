@@ -55,7 +55,7 @@ async function init(){
  const requested=params.get('focus');
  const initial=/^\d{4}(-(0[1-9]|1[0-2]))?$/.test(requested)?bounds(requested).start:null;
  let anchor=initial??Math.min(...events.map(e=>intervals.get(e.id).start)),size=initial?12:frame?.hasAttribute('data-package-draft')?0:36;
- let emptyLanes=false,selected='',relationFocus=null,preferred=null,anchors=new Map(),start,end,ticks,plotWidth;
+ let emptyLanes=false,allEdges=false,selected='',relationFocus=null,preferred=null,anchors=new Map(),start,end,ticks,plotWidth;
  // Cards rise in date order when the window changes, not when the page only resizes.
  let entrance=true,ready=false,sequence=null;
  const labels={cause:'원인·계기',shift:'전환·변화',action:'활동·실행',succession:'계승',integration:'통합·편입',split:'분열·개편',background:'구조적 배경'};
@@ -189,6 +189,8 @@ async function init(){
  $('next').onclick=()=>setWindow(monthStart(monthOf(end)),size);
  $('empty-lanes').onclick=()=>{emptyLanes=!emptyLanes;$('empty-lanes').setAttribute('aria-pressed',String(emptyLanes));render();};
  $('relations').textContent='전체 관계 '+relations.length+'건';$('relations').onclick=()=>open('all');
+ // Lines across every lane bury the cards, so only the selected card's relations show until asked.
+ $('all-edges').onclick=()=>{allEdges=!allEdges;$('all-edges').setAttribute('aria-pressed',String(allEdges));drawEdges();};
  function addAnchor(id,node){
   if(!anchors.has(id))anchors.set(id,[]);
   anchors.get(id).push(node);
@@ -205,7 +207,10 @@ async function init(){
   rail.append(make('b','',name));
   if(record){rail.dataset.record=record.id;addAnchor(record.id,rail);}
   const track=make('div','track');line.append(rail,track);$('lanes').append(line);
-  for(const tick of ticks){const grid=make('i','tick');grid.style.left=x(tick.t)+'px';track.append(grid);}
+  for(const [i,tick] of ticks.entries()){
+   const grid=make('i',tick.shaded?'tick shaded':'tick');
+   grid.style.left=x(tick.t)+'px';grid.style.width=x(ticks[i+1]?.t??end)-x(tick.t)+'px';track.append(grid);
+  }
   return track;
  }
  function periodLane(){
@@ -325,6 +330,7 @@ async function init(){
   const isActive=r=>relationFocus?.relationIds.has(r.id)||selected===r.fromId||selected===r.toId;
   const links=[];
   for(const rel of [...relations].sort((a,b)=>Number(isActive(a))-Number(isActive(b)))){
+   if(!allEdges&&!isActive(rel))continue;
    let nearest=Infinity,pair;
    for(const from of candidates(rel.fromId))for(const to of candidates(rel.toId)){
     const a=box(from),b=box(to);
@@ -526,7 +532,7 @@ async function init(){
   Object.assign(viewportMark.style,{left:100*(begin-min)/(max-min)+'%',width:100*span/(max-min)+'%'});
   ticks=[];
   const step=12*Math.ceil(span/12/Math.max(3,Math.floor(plotWidth/65)));
-  for(let m=begin;m<begin+span;m+=step)ticks.push({t:monthStart(m),label:m/12+'년'});
+  for(let m=begin;m<begin+span;m+=step)ticks.push({t:monthStart(m),label:m/12+'년',shaded:Math.floor(m/step)%2===1});
   // When every year has its own column, the cards need no year heading of their own.
   viewport.classList.toggle('yearly',step===12);
   $('ticks').replaceChildren();for(const tick of ticks){if(plotWidth-x(tick.t)<34&&tick.t!==start)continue;

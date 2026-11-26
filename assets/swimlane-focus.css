@@ -24,20 +24,21 @@
 .span-symbol{width:17px;height:9px;color:#86541f;border-inline:2px solid currentColor}
 .span-symbol::after{content:"";position:absolute;inset-inline:0;top:3px;border-top:3px solid currentColor}
 .key button{margin-left:auto}
-.viewport{--rail:clamp(91px,17%,160px);background:#fffdf7;border:1px solid #cbd0c1;min-height:155px;overflow:clip}.row{display:grid;grid-template-columns:var(--rail) minmax(0,1fr)}.axis{position:sticky;top:var(--axis-top,0px);z-index:6;background:#edf0e7;border-bottom:1px solid #c9cfc1}.axis strong,.row .rail{padding:10px;font-size:14px}.axis #ticks,.track{position:relative}#ticks span{position:absolute;top:9px;font:600 13px/1.2 var(--font-sans)}
-.plot{position:relative}.lane{border-bottom:1px solid #e2e2d6}.lane:last-child{border-bottom:0}.rail{border:0;border-right:1px solid #dcded1;background:#f5f5ed;text-align:left;align-content:start;overflow-wrap:anywhere;color:#294d41}.rail small{display:block;font-size:12px;color:#647065;margin-bottom:3px}.rail b{font-size:15px}.track{min-width:0;overflow:hidden;background:#fffdf8}.tick{position:absolute;inset-block:0;border-left:1px solid #e9e8df;pointer-events:none}.rail.era-rail,.era-track{background:#f6f0e4}.era{position:absolute;height:26px;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border:1px solid #c49a62;background:#ecdec3;color:#5b4427;font-size:13px;padding:1px 6px}.era-track .no-period{display:inline-block;padding:10px;color:#746d60;font-size:13px}
+.viewport{--rail:clamp(91px,17%,160px);background:#fffdf7;border:1px solid #cbd0c1;min-height:155px;overflow:clip}.row{display:grid;grid-template-columns:var(--rail) minmax(0,1fr)}.axis{position:sticky;top:var(--axis-top,0px);z-index:6;background:#edf0e7;border-bottom:1px solid #c9cfc1}.axis strong,.row .rail{padding:10px;font-size:14px}.axis #ticks,.track{position:relative}#ticks span{position:absolute;top:8px;font:700 17px/1.2 var(--font-sans);font-variant-numeric:tabular-nums}
+.plot{position:relative}.lane{border-bottom:1px solid #e2e2d6}.lane:last-child{border-bottom:0}.rail{border:0;border-right:1px solid #dcded1;background:#f5f5ed;text-align:left;align-content:start;overflow-wrap:anywhere;color:#294d41}.rail small{display:block;font-size:12px;color:#647065;margin-bottom:3px}.rail b{font-size:16px}.track{min-width:0;overflow:hidden;background:#fffdf8}.tick{position:absolute;inset-block:0;border-left:1px solid #d5d9cb;pointer-events:none}.tick.shaded{background:#f5f4ea}.rail.era-rail,.era-track{background:#f6f0e4}.era{position:absolute;height:26px;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border:1px solid #c49a62;background:#ecdec3;color:#5b4427;font-size:13px;padding:1px 6px}.era-track .no-period{display:inline-block;padding:10px;color:#746d60;font-size:13px}
 .lane-band{position:relative;padding:7px 0 2px}.lane-band+.lane-band{border-top:1px solid #d4dbcf}
-.band-heading{margin:0 0 3px 6px;font:600 12px/1.5 var(--font-sans);color:#4d6356}
+/* The key above already tells points from spans, so the per-lane headings are for screen readers only. */
+.band-heading{position:absolute;width:1px;height:1px;margin:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 .band-items{position:relative}
-.event{border:0;background:#f1f5ee;color:#223d34;text-align:left;line-height:1.35;padding:3px 7px;max-width:100%}
-.event b{font-size:14px;white-space:normal;overflow-wrap:anywhere}
-.event .when{margin-inline-start:6px;font-size:11.5px;line-height:1.4;font-variant-numeric:tabular-nums;white-space:nowrap;color:#4c6457}
-.band-items>.event{position:absolute;width:max-content;max-width:min(260px,100%)}
+.event{border:0;background:#f1f5ee;color:#223d34;text-align:left;line-height:1.4;padding:5px 9px;max-width:100%}
+.event b{font-size:16px;white-space:normal;overflow-wrap:anywhere}
+.event .when{display:inline-block;margin-inline-start:7px;padding:0 5px;font-size:12.5px;font-weight:600;line-height:1.5;font-variant-numeric:tabular-nums;white-space:nowrap;vertical-align:1px;background:#dce6d9;color:#2f5546}
+.band-items>.event{position:absolute;width:max-content;max-width:min(300px,100%)}
 .year-events{position:absolute;padding:4px 0 4px 13px}
 .year-events::before{content:"";position:absolute;inset:0 0 0 13px;background:#f1f5ee;border-left:2px solid #8ba294}
 .year-events h4{position:relative;margin:0 0 2px;padding-inline:7px;font:650 12px/1.5 var(--font-sans);color:#466452}
 .yearly .year-events h4{display:none}
-.year-events .event{position:relative;display:block;width:100%;padding:4px 7px;background:transparent}
+.year-events .event{position:relative;display:block;width:100%;padding:5px 9px;background:transparent}
 .year-events .event+.event{border-top:1px solid #d8e1d5;border-radius:0}
 .year-events .event::before,.date-dot{content:"";position:absolute;width:8px;height:8px;border-radius:50%;background:#28695b}
 .year-events .event::before{left:-12px;top:calc(50% - 4px)}
@@ -45,7 +46,7 @@
 .date-dot{top:-13px;transform:translateX(-50%)}
 .date-dot::after{content:"";position:absolute;top:100%;left:50%;height:5px;border-left:1px solid #628476}
 .span-event{background:#f7efe0;color:#573e24}
-.span-event .when{color:#725431}
+.span-event .when{background:#eadcc2;color:#6a4a22}
 #importance-key{display:flex;gap:10px;align-items:center;border-left:1px solid #cbd0c1;padding-left:10px}
 #importance-key:empty{display:none}
 #importance-key .level-core,.event[data-importance=core]{box-shadow:inset 3px 0 currentColor;padding-left:9px}
@@ -72,7 +73,7 @@
 #edges .edge-hit:focus{outline:none}
 #edges .edge:has(+ .edge-hit:focus-visible){stroke:#a94929;stroke-width:3.5;opacity:1}
 #selection{margin-top:10px;padding:10px 14px;background:#fffefa;border-left:3px solid #915536}#selection:empty{display:none}.selection-head{flex-wrap:wrap}.selection-head b{margin-right:auto}.selection-head small{font-size:13px;color:#647064}.neighbors{display:flex;gap:5px;flex-wrap:wrap;margin-top:7px}#selection .neighbors button{font-size:13px;text-align:left}.empty{padding:16px;font-size:14px}#status:empty{display:none}
-@media(max-width:550px){.controls{gap:8px;margin-top:12px}.move{gap:2px}#zoom button{padding-inline:8px}.rail b{font-size:13px}.event b{font-size:13px}.viewport{--rail:84px}.key{gap:5px}.key span{font-size:12px}}
+@media(max-width:550px){.controls{gap:8px;margin-top:12px}.move{gap:2px}#zoom button{padding-inline:8px}.rail b{font-size:13px}.event b{font-size:14px}.viewport{--rail:84px}.key{gap:5px}.key span{font-size:12px}#ticks span,#ticks .axis-jump{font-size:14px}}
 #era-overview{display:grid;grid-template-columns:minmax(0,1fr);row-gap:4px;container-type:inline-size;margin:5px 0 3px}
 #era-overview:empty{display:none}
 .overview-era{position:relative;grid-column:1;justify-self:start;align-self:start;border:0;background:transparent;color:#fff9e9;text-align:left;padding:7px 0 2px;line-height:1.3}
@@ -80,8 +81,8 @@
 .era-caption{display:grid;width:max-content;max-width:min(185px,100cqw);gap:2px;white-space:normal;overflow-wrap:anywhere}
 .era-caption b{font-size:14px;font-weight:600}.era-years{color:#d9e4d4;font-size:13px;font-variant-numeric:tabular-nums}
 .overview-era:hover .era-caption b{text-decoration:underline;text-underline-offset:3px}.overview-era:hover .era-stroke{background:#c3cdb2}
-#ticks .axis-jump{position:absolute;top:5px;background:transparent;border:0;border-bottom:1px dotted #869781;padding:3px 1px;font-size:13px;font-weight:600}
-.key #relations{margin-left:0}.key #empty-lanes[aria-pressed=true]{background:var(--chronicle-green);color:white}.quiet{background:#fafaf4}
+#ticks .axis-jump{position:absolute;top:4px;background:transparent;border:0;border-bottom:1px dotted #869781;padding:3px 1px;font-size:17px;font-weight:700;font-variant-numeric:tabular-nums}
+.key :is(#relations,#all-edges){margin-left:0}.key :is(#empty-lanes,#all-edges)[aria-pressed=true]{background:var(--chronicle-green);color:white}.quiet{background:#fafaf4}
 #overview{touch-action:pan-y;user-select:none}#overview .window{border-inline:2px solid #ffcc8d}
 /* Cards appear one at a time in date order; a hidden card keeps its place in the lane. */
 .booting .plot,.waiting{visibility:hidden}
@@ -91,4 +92,4 @@
 #sequence .sequence-play{background:var(--chronicle-green);border-color:var(--chronicle-green);color:#fff}
 #sequence .sequence-count{min-width:4.5em;justify-content:center;font-size:13px;font-variant-numeric:tabular-nums}
 .event[data-now]{background:#f8e3d4;color:#713520;box-shadow:0 0 0 2px #af4c2b}
-.event[data-now] .when{color:inherit}
+.event[data-now] .when{background:#efcdb8;color:inherit}
